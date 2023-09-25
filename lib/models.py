@@ -1,35 +1,33 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
+
 db = SQLAlchemy()
 
 class Restaurant(db.Model):
-    __tablename__ = 'restaurants'
+    __tablename__ = 'restaurant'  
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     address = db.Column(db.String)
 
-    pizzas = db.relationship('Pizza', back_populates='restaurant')
+    pizzas = db.relationship('Pizza', secondary='restaurant_pizzas', back_populates='restaurants')
 
 class Pizza(db.Model):
-    __tablename__ = 'pizzas'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     ingredients = db.Column(db.String)
-
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
-    restaurant = db.relationship('Restaurant', backref='pizza')
+
+    restaurants = db.relationship('Restaurant', secondary='restaurant_pizzas', back_populates='pizzas')
 
 class RestaurantPizza(db.Model):
     __tablename__ = 'restaurant_pizzas'
+
     id = db.Column(db.Integer, primary_key=True)
+    pizza_id = db.Column(db.Integer, db.ForeignKey("pizzas.id"))  
+    restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"))  
     price = db.Column(db.Numeric(precision=3, asdecimal=True, decimal_return_scale=None))
-
-    pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'))
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'))
-
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -43,5 +41,5 @@ class RestaurantPizza(db.Model):
     @validates('name')
     def validate_pizza_name(self, key, value):
         if len(value) >= 50:
-            raise ValueError('Exceeded charr limit for pizza name')
+            raise ValueError('Exceeded character limit for pizza name')
         return value
