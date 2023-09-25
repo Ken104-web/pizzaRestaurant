@@ -8,6 +8,7 @@ flask = "*"
 flask-migrate = "*"
 flask-sqlalchemy = "*"
 flask-restful = "*"
+datetime = "*"
 
 [dev-packages]
 

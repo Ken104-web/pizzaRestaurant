@@ -27,6 +27,12 @@ class Restaurant(db.Model):
     
     pizzas = db.relationship("Pizza", secondary = "restaurant_pizzas" , back_populates = "restaurants")
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'address': self.address
+        }
     @validates("name")
     def validate_name(self, key, name):
         if len(name) >50:
