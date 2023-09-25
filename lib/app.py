@@ -41,6 +41,17 @@ class RestauranrtNames(Resource):
         return resp
 api.add_resource(RestauranrtNames, '/pizzaplace')
 
+class GetPizzas(Resource):
+    def get(self):
+        pizzas = [pizza.to_dict() for pizza in Pizza.query.all()]
+
+        resp = make_response(
+            jsonify(pizzas),
+            200,
+        )
+        return resp
+api.add_resource(GetPizzas, '/pizzas')
+
 class RestaurantNamesWithId(Resource):
     def get(self, id):
         pizza_name = Pizza.query.filter_by(id=id).first()
@@ -53,6 +64,15 @@ class RestaurantNamesWithId(Resource):
             return resp
         else:
             raise ValueError('Restaurant not found!')
+    def delete(self, id):
+        pizza_name = Pizza.query.filter_by(id=id).first()
+        db.session.delete(pizza_name)
+        db.session.commit()
+        resp = make_response(
+            '',
+            204,
+        )
+        return resp
 api.add_resource(RestaurantNamesWithId, '/pizzaplace/<int:id>')
 
 
