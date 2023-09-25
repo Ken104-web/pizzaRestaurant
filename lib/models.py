@@ -14,7 +14,12 @@ class Pizza(db.Model):
     ingredients = db.Column(db.String)
     created_at = db.Column(db.DateTime,server_default=db.func.now())
     updated_at = db.Column(db.DateTime,onupdate=db.func.now())
-    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'ingedients':self.ingredients
+        }
     
     restaurants = db.relationship("Restaurant", secondary = "restaurant_pizzas" , back_populates="pizzas") 
 

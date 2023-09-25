@@ -4,7 +4,7 @@ from flask import Flask, request, make_response, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
-from models import db, Restaurant
+from models import db, Restaurant, Pizza
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -41,7 +41,19 @@ class RestauranrtNames(Resource):
         return resp
 api.add_resource(RestauranrtNames, '/pizzaplace')
 
-
+class RestaurantNamesWithId(Resource):
+    def get(self, id):
+        pizza_name = Pizza.query.filter_by(id=id).first()
+        if pizza_name:
+            pizza_data = pizza_name.to_dict()
+            resp = make_response(
+                pizza_data,
+                200,
+            )
+            return resp
+        else:
+            raise ValueError('Restaurant not found!')
+api.add_resource(RestaurantNamesWithId, '/pizzaplace/<int:id>')
 
 
 if __name__ == '__main__':
