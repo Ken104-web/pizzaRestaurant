@@ -5,6 +5,7 @@ from sqlalchemy.orm import validates
 
 db = SQLAlchemy()
 
+# creating pizza, restaurant and pizza_restaurant relationship
 
 class Pizza(db.Model):
     __tablename__ = 'pizzas'
@@ -32,6 +33,7 @@ class Restaurant(db.Model):
     
     pizzas = db.relationship("Pizza", secondary = "restaurant_pizzas" , back_populates = "restaurants")
     
+    # creating a dictionary list
     def to_dict(self):
         return {
             'id': self.id,
