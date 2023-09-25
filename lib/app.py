@@ -4,7 +4,7 @@ from flask import Flask, request, make_response, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 
-from models import db, Restaurant, Pizza
+from models import db, Restaurant, Pizza, RestaurantPizza
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -51,6 +51,21 @@ class GetPizzas(Resource):
         )
         return resp
 api.add_resource(GetPizzas, '/pizzas')
+class PostPizzas(Resource):
+    def post(self):
+        data = request.get_json()
+
+        new_pizza = Pizza(
+            id=data['id'],
+            name=data['name'],
+            ingredients=data['ingredients'],
+
+        )
+        db.session.add(new_pizza)
+        db.session.commit()
+        return make_response(new_pizza.to_dict(), 201)
+        
+api.add_resource(PostPizzas, '/postpizza')
 
 class RestaurantNamesWithId(Resource):
     def get(self, id):

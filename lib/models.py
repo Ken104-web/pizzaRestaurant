@@ -51,7 +51,9 @@ class RestaurantPizza(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pizza_id = db.Column(db.Integer , db.ForeignKey("pizzas.id"))
     restaurant_id = db.Column(db.Integer , db.ForeignKey("restaurants.id"))
-    price = db.Column(db.Numeric(precision=8, asdecimal=True, decimal_return_scale=None))
+    price = db.Column(db.Integer ,  db.CheckConstraint(
+            "price >=1 AND price <=30", name="Price value is not within range 1 and 30"
+        ))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
