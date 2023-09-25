@@ -11,8 +11,11 @@ with app.app_context():
     addresses = ['Good Italian, Ngong Road, 5th Avenue', 'Westgate Mall, Mwanzi Road, Nrb 100', '456 Elm Street, Another City, USA']
     pizzaPlaces = ['Dominions', 'Pizza hut','Papa jones pizza' ]
     pizza = []
-    for n in range(3):
+    for n in range(10):
+        print('****Hello*****')
         pn = Restaurant(name=rc(pizzaPlaces), address=rc(addresses))
         pizza.append(pn)
     db.session.add_all(pizza)
+    db.session.commit()
+    print("****Done****")
 
