@@ -12,12 +12,12 @@ Validations and Constraint
 Created the following relationships:
 A '```Restaurant``` has many Pizzas through ```RestaurantPizza```
 
-A ```Pizza``` has many ```Restaurants ```through ````RestaurantPizza```
+A ```Pizza``` has many ```Restaurants ```through ```RestaurantPizza```
 
 A ```RestaurantPizza``` belongs to a Restaurant and belongs to a Pizza
 
 # Routes
-The project includes various routes each handling various Http verbs including ````GET```, ````POST``` showcasing data made in the database.
+The project includes various routes each handling various Http verbs including ```GET```, ```POST``` showcasing data made in the database.
 
 
 # Project Setup
@@ -29,7 +29,7 @@ you can clone the repo using:
 
 navigate to the project directory
 
-````cd pizzaRestaurant```
+```cd pizzaRestaurant```
 
 install project dependancies using pipenv including:
 
@@ -41,7 +41,7 @@ flask-restful
 # running the Api
 
 Start the development server:
-````flask run```
+```flask run```
 
 You can access the API in your web browser or use a tool like curl or Postman to send requests to the API endpoints.
 
