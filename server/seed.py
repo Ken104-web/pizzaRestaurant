@@ -3,7 +3,7 @@ from models import db, Author, Book
 from random import randint, choice as rc
 with app.app_context():
     Author.query.delete()
-    # Book.query.delete()
+    Book.query.delete()
 
     authors = [
         "William Shakespeare",
@@ -50,7 +50,7 @@ with app.app_context():
     "The Shining"
     ]
     known_authors = []
-    for a in range(21):
+    for a in range(20):
         print('all good')
         place_authors = Author(name=rc(authors))
         known_authors.append(place_authors)
@@ -59,9 +59,9 @@ with app.app_context():
     print('***print***')
 
     known_books = []
-    for bk in range(21):
+    for bk in range(20):
         print('all good')
-        place_books = Book(name=rc(book_names), author_id=randint(1,21))
+        place_books = Book(name=rc(book_names), author_id=randint(1,20))
         known_books.append(place_books)
         print('All good here')
     db.session.add_all(known_books)

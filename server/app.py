@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 app.json.compact = False
 
 migrate = Migrate(app, db)
@@ -41,6 +40,7 @@ class GetAuthor(Resource):
         return resp
    
 api.add_resource(GetAuthor, '/authors')
+
 class GetBook(Resource):
      def get(self):
         bookNames = [book.to_dict() for book in Book.query.all()]
